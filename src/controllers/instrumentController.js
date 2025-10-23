@@ -11,10 +11,15 @@ const getAllInstruments = async (req, res) => {
                 .send({ message: "No existe ningún instrumento" });
         }
 
-        console.log(`Inside all instruments`, allInstruments);
         res.send({ status: "OK", data: allInstruments });
     } catch (error) {
-
+        res
+            .status(error?.status || 500)
+            .send({
+                status: "FAILED",
+                message: "Error al realizar la petición",
+                data: { error: error?.message || error }
+            });
     }
 }
 

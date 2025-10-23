@@ -4,14 +4,14 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const mongodbRoute = 'mongodb+srv://ignacio:igna_0000@cluster0.a2mlm48.mongodb.net/TheMoorlanWardener?retryWrites=true&w=majority';
 
-const instrumentRouter = require('./routes/instrumentRoutes');
+const router = require('./routes/routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use("/api/Instruments", instrumentRouter);
+app.use("/api/", router);
     
 async function start() {
     try{

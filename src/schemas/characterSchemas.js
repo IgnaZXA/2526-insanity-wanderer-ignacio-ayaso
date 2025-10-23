@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+
+const pouchSchema = new Schema({
+    coins: Number,
+});
+
 const equipmentSchema = new Schema({
     instrument: String,
     pouch: pouchSchema,
     weight: Number
-});
-
-const pouchSchema = new Schema({
-    coins: Number,
 });
 
 const characterSchema = new Schema({
