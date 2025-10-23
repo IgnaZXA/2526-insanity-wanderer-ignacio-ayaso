@@ -2,6 +2,9 @@
 const questService = require('../services/questService');
 
 
+const characterService = require('../services/characterService');
+
+
 const getAllQuests = async (req, res) => {
     try {
         const allQuests = await questService.getAllQuests();
@@ -21,9 +24,19 @@ const getAllQuests = async (req, res) => {
                 data: { error: error?.message || error }
             });
     }
-}
+};
+
+
+const addNewQuest = async( req, res ) => {
+    try{
+
+    }catch( error ){
+
+    }
+};
 
 
 module.exports = {
     getAllQuests,
+    addNewQuest,
 }
