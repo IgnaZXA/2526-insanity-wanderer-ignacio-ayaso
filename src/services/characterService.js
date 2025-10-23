@@ -2,11 +2,10 @@
 const Character = require('../database/Character');
 
 const getAllCharacters = async () => {
-    try{
-        const allCharacters = Character.getAllCharacters();
-        
+    try {
+        const allCharacters = await Character.getAllCharacters();
         return allCharacters;
-    }catch(error){
+    } catch (error) {
         throw error;
     }
 };

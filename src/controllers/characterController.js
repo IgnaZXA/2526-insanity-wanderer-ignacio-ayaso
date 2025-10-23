@@ -5,7 +5,6 @@ const characterService = require('../services/characterService');
 const getAllCharacters = async (req, res) => {
     try {
         const allCharacters = await characterService.getAllCharacters();
-
         if (allCharacters.length === 0) {
             return res.status(404)
                 .send({ message: "No existe ningún personaje" });
