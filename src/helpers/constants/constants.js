@@ -1,4 +1,4 @@
-import Die  from "../classes/Die.js";
+import Die  from "../../classes/Die.js";
 
 
 // TODO: Crear los objetos dados!

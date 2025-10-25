@@ -1,11 +1,9 @@
 
 const questService = require('../services/questService');
-
-
-
-const { getAllCharacters } = require('../services/characterService');
-const { getAllInstruments } = require('../services/instrumentService');
-const { getAllSongs } = require('../services/characterService');
+const characterService = require('../services/characterService');
+const instrumentService = require('../services/instrumentService');
+const songService = require('../services/songService');
+const utilities = require('../helpers/utilities/utilities');
 
 const getAllQuests = async (req, res) => {
     try {
@@ -30,54 +28,42 @@ const getAllQuests = async (req, res) => {
 
 
 const createNewQuest = async (req, res) => {
-
+    console.log("Creating a new Quest....");
     try {
+
         // 1º Leer characters, songs, instruments y quests
-        const characters = await getAllCharacters();
+        //   const characters = await characterService.getAllCharacters();
+        //   const instruments = await instrumentService.getAllInstruments();
+        //   const songs = await songService.getAllSongs();
+        //   const quests = await questService.getAllQuests();
 
-        const songs = await getAllSongs();
-        const instruments = await getAllInstruments();
+        const [characters, instruments, songs, quests] = await utilities.getAllCollections();
 
-        const getRandomIndex = (anyArray) => {
-            return (Math.floor(Math.random() * anyArray.length));
-        };
+        // 2º Asignar 
+        // characterService.instrumentAssignationToCharacter(instruments, characters);
 
-        const assignInstrument = (instruments, characters) => {
-            const auxInstruments = instruments.length;
 
-            for (let i = 0; i < auxInstruments.length; i++) {
-                let randIndx = getRandomIndex(instruments);
-                const randInstrument = instruments[randIndx];
+        // console.log("Fallo");
 
-                // Para que no se repitan los instrumentos descartamos del array el instrumento seleccionado.
-                auxInstruments.splice(randIndx, 1);
+        // const lastQuests = await questService.getLastQuest();
 
-                randIndx = getRandomIndex(instruments);
-                const randCharacter = characters[randIndx];
 
-                randCharacter.equipment[0].instrument = randInstrument.name;
-            }
-        };
+        // console.log(lastQuests);
 
-        assignInstrument(instruments.data, characters.data);
+        // const newQuest = {
+        //     day_number  : (lastQuests.day_number + 1),
+        //     day_number  : 1,
+        //     day_week    : "depends",
+        //     start_time  : "5:00",
+        //     end_time    : "22:08",
+        //     characters  : [],
+        // };
 
-        const lastQuests = await questService.getLastQuest();
-
-        console.log(lastQuests);
-
-        const newQuest = {
-            day_number  : (lastQuests.day_number + 1),
-            day_number  : 1,
-            day_week    : "depends",
-            start_time  : "5:00",
-            end_time    : "22:08",
-            characters  : [],
-        };
-
-        const createdQuest = await questService.createNewQuest(newQuest);
-        res.status(201).send({ status: "OK", data: createdQuest });
+        // const createdQuest = await questService.createNewQuest(newQuest);
+        // res.status(201).send({ status: "OK", data: createdQuest });
 
     } catch (error) {
+        console.log("Fallo encontrado");
         res
             .status(error?.status || 500)
             .send({
@@ -85,9 +71,8 @@ const createNewQuest = async (req, res) => {
                 message: "Error al realizar la petición POST para crear una nueva Quest",
                 data: { error: error?.message || error }
             });
-    }
-};
-
+    };
+}
 
 module.exports = {
     getAllQuests,

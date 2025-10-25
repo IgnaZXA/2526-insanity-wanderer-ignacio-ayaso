@@ -1,5 +1,6 @@
 
 const Character = require('../database/Character');
+const { getRandomIndex } = require('../helpers/utilities/utilities');
 
 const getAllCharacters = async () => {
     try {
@@ -10,7 +11,20 @@ const getAllCharacters = async () => {
     }
 };
 
+function instrumentAssignationToCharacter(instruments, characters) {
+
+    instruments.map( (instrument) => {
+        const randomChar = characters[getRandomIndex(characters)];
+        randomChar.equipment[0].instrument = instrument;
+        characters.splice(randIndx, 1);
+    });
+}
+
+
 
 module.exports = {
     getAllCharacters,
+
+
+    instrumentAssignationToCharacter,
 }
