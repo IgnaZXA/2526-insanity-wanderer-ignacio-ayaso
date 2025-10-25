@@ -23,7 +23,47 @@ const getAllInstruments = async (req, res) => {
     }
 }
 
+const getInstrument = async (req, res) => {
+    const { instrumentName } = req.params;
+    if(!instrumentName){
+        return res
+            .status(400)
+            .send({
+                status: "FAILED",
+                data: {
+                    error: "Parameter 'instrumentName' can not be empty"
+                },
+            });
+    };
+
+
+    try{
+        const instrument = await instrumentService.getInstrument(instrumentName);
+        if(!instrument){
+            return res
+            .status(404)
+            .send({ status: "FAILED",
+                data: {error: `Can't find instrument with the name: '${instrumentName}'`}
+            });
+        }
+
+        res.status(200).send({
+            status:'OK',
+            data: instrument,
+        });
+    }catch(error){
+        res
+            .status(error?.status || 500)
+            .send({ 
+                status: "FAILED",
+                message: "Error!",
+                data: {error: error?.message || error }
+            });
+    }
+};
+
 
 module.exports = {
     getAllInstruments,
+    getInstrument,
 }

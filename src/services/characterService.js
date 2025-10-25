@@ -1,6 +1,5 @@
 
 const Character = require('../database/Character');
-const { getRandomIndex } = require('../helpers/utilities/utilities');
 
 const getAllCharacters = async () => {
     try {
@@ -12,11 +11,15 @@ const getAllCharacters = async () => {
 };
 
 function instrumentAssignationToCharacter(instruments, characters) {
+    const { getRandomIndex } = require('../helpers/utilities/utilities');
 
-    instruments.map( (instrument) => {
-        const randomChar = characters[getRandomIndex(characters)];
-        randomChar.equipment[0].instrument = instrument;
-        characters.splice(randIndx, 1);
+    characters.map((character) => {
+        if (instruments.length > 0) {
+            const randIndx = getRandomIndex(instruments);
+            const randomInstr = instruments[randIndx];
+            character.equipment[0].instrument = randomInstr.name;
+            instruments.splice(randIndx, 1);
+        }
     });
 }
 

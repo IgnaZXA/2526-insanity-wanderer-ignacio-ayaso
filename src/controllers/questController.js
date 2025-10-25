@@ -32,15 +32,16 @@ const createNewQuest = async (req, res) => {
     try {
 
         // 1º Leer characters, songs, instruments y quests
-        //   const characters = await characterService.getAllCharacters();
-        //   const instruments = await instrumentService.getAllInstruments();
-        //   const songs = await songService.getAllSongs();
-        //   const quests = await questService.getAllQuests();
-
         const [characters, instruments, songs, quests] = await utilities.getAllCollections();
 
+
         // 2º Asignar 
-        // characterService.instrumentAssignationToCharacter(instruments, characters);
+        characterService.instrumentAssignationToCharacter(instruments, characters);
+
+        console.log(characters);
+
+
+        res.status(200).send(characters);
 
 
         // console.log("Fallo");
