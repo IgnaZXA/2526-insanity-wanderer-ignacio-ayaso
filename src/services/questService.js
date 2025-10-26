@@ -160,7 +160,12 @@ const getHeaviestCharacter = (characters) => {
 const getAssignedCharactersToQuest = async (characters) => {
 
     /**
-     * ERROR GORDO:
+     * ERROR GORDO al usar: 
+     * 
+     * const charsJSON = await characters.map(async (character) => {
+     *      const charJSON = await characterService.getCharacterByName(character);
+     *      return charJSON;
+     * });
      * 
      * Lo que pasa con este error es que characters.map devuelve un array y no una promesa lo que hace que el
      * await no espere a ninguna promesa y por lo tanto charJSON sea un array vacio (en realidad un array de promesas incumplidas, pero se queda como array vacio)
@@ -170,14 +175,24 @@ const getAssignedCharactersToQuest = async (characters) => {
      * 
      *  2 No cambiar .map() pero sí usar Promise.all() (Si quieres usar esto investiga)
      * 
+     * 
+     * Solución optada: cambiarlo por:
+     * 
+     *  const charactersJSON = [];
+     *  for(let i = 0; i < characters.length; i++){
+     *      const characterName = characters[i];
+     *      const characterJSON = await characterService.getCharacterByName(characterName); 
+     *      charactersJSON.push(characterJSON);
+     *  }
+     * 
      */
 
-    const charsJSON = [];
 
-    for (let i = 0; i < characters.length ; i++){
-        const character = characters[i];
-        const charJSON = await characterService.getCharacterByName(character);
-        charsJSON.push(charJSON);
+    const charactersJSON = [];
+    for(let i = 0; i < characters.length; i++){
+        const characterName = characters[i];
+        const characterJSON = await characterService.getCharacterByName(characterName);
+        charactersJSON.push(characterJSON);
     }
 
     console.log("SE ACABO!");
