@@ -19,7 +19,7 @@ const characterSchema = new Schema({
     description: String,
     stamina: Number,
     favourite_drink: String,
-    equipment: [equipmentSchema],
+    equipment: equipmentSchema,
 });
 
 module.exports = {

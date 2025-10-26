@@ -1,9 +1,6 @@
 
 const questService = require('../services/questService');
-const characterService = require('../services/characterService');
-const instrumentService = require('../services/instrumentService');
-const songService = require('../services/songService');
-const utilities = require('../helpers/utilities/utilities');
+
 
 const getAllQuests = async (req, res) => {
     try {
@@ -30,38 +27,10 @@ const getAllQuests = async (req, res) => {
 const createNewQuest = async (req, res) => {
     console.log("Creating a new Quest....");
     try {
-
-        // 1º Leer characters, songs, instruments y quests
-        const [characters, instruments, songs, quests] = await utilities.getAllCollections();
-
-
-        // 2º Asignar 
-        characterService.instrumentAssignationToCharacter(instruments, characters);
-
-        console.log(characters);
-
-
-        res.status(200).send(characters);
-
-
-        // console.log("Fallo");
-
-        // const lastQuests = await questService.getLastQuest();
-
-
-        // console.log(lastQuests);
-
-        // const newQuest = {
-        //     day_number  : (lastQuests.day_number + 1),
-        //     day_number  : 1,
-        //     day_week    : "depends",
-        //     start_time  : "5:00",
-        //     end_time    : "22:08",
-        //     characters  : [],
-        // };
+        const quest = await questService.createNewQuest();
 
         // const createdQuest = await questService.createNewQuest(newQuest);
-        // res.status(201).send({ status: "OK", data: createdQuest });
+        res.status(201).send({ status: "OK", data: "Hola" });
 
     } catch (error) {
         console.log("Fallo encontrado");

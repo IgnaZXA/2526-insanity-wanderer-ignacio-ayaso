@@ -10,6 +10,15 @@ const getAllCharacters = async () => {
     }
 };
 
+const getCharacterByName = async (characterName) => {
+    try {
+        const character = await Character.getCharacterByName(characterName);
+        return character;
+    }catch(error){
+        throw error;
+    }
+};
+
 function instrumentAssignationToCharacter(instruments, characters) {
     const { getRandomIndex } = require('../helpers/utilities/utilities');
 
@@ -17,7 +26,7 @@ function instrumentAssignationToCharacter(instruments, characters) {
         if (instruments.length > 0) {
             const randIndx = getRandomIndex(instruments);
             const randomInstr = instruments[randIndx];
-            character.equipment[0].instrument = randomInstr.name;
+            character.equipment.instrument = randomInstr.name;
             instruments.splice(randIndx, 1);
         }
     });
@@ -27,7 +36,7 @@ function instrumentAssignationToCharacter(instruments, characters) {
 
 module.exports = {
     getAllCharacters,
-
+    getCharacterByName,
 
     instrumentAssignationToCharacter,
 }

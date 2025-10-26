@@ -9,7 +9,17 @@ const getAllCharacters = async () => {
     }
 };
 
+const getCharacterByName = async (characterName) => {
+    try {
+        const character = await Character.findOne({name : characterName});
+        return character;
+    }catch(error){
+        throw error;
+    }
+};
+
 
 module.exports = {
     getAllCharacters,
+    getCharacterByName,
 };

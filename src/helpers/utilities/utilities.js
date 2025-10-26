@@ -30,18 +30,18 @@
  * de "instrumentAssignationToCharacter(instruments, characters)".
  *  
  */
-const characterService = require('../../services/characterService');
-const questService = require('../../services/questService');
-const instrumentService = require('../../services/instrumentService');
-const songService = require('../../services/songService');
 
-// --- USE ON COLLECTION LAYER ---
+
 async function getAllCollections() {
-  
-  const characters = await characterService.getAllCharacters();
-  const instruments = await instrumentService.getAllInstruments();
-  const songs = await songService.getAllSongs();
-  const quests = await questService.getAllQuests();
+  const characterService  = require('../../services/characterService');
+  const questService      = require('../../services/questService');
+  const instrumentService = require('../../services/instrumentService');
+  const songService       = require('../../services/songService');
+
+  const characters        = await characterService.getAllCharacters();
+  const instruments       = await instrumentService.getAllInstruments();
+  const songs             = await songService.getAllSongs();
+  const quests            = await questService.getAllQuests();
 
   return [characters, instruments, songs, quests];
 }
@@ -51,7 +51,27 @@ function getRandomIndex(array) {
   return (Math.floor(Math.random() * array.length));
 }
 
+/**
+ * Pasando un timepo en formato xx:yy donde xx son horas e yy minutos obtener la cant total de minutos
+ * @param {} time 
+ */
+function parseToMinutes(time) {
+  const [hours, minutes] = time.split(":");
+  return (hours*60 + minutes);
+};
+
+function parseToTimeFormat(minutes){
+  const hours = 0;
+  while(minutes > 60){
+    minutes /= 60;
+    hours ++;
+  }
+  return (`${(hours < 10) ? `0${hours}` : `${hours}` }:${(minutes < 10) ? (`0${minutes}`) : (`${minutes}`)}`);
+}
+
 module.exports = {
   getAllCollections,
   getRandomIndex,
+  parseToMinutes,
+  parseToTimeFormat,
 }; 

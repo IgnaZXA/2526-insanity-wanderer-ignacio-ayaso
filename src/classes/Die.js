@@ -1,7 +1,5 @@
 
-
-
-export default class Die{
+class Die{
     constructor(faces){
         this.faces = faces;
     }
@@ -10,3 +8,6 @@ export default class Die{
         return Math.floor(Math.random() * this.faces) + 1; 
     }
 } 
+
+
+module.exports = Die;
