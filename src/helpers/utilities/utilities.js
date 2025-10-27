@@ -61,11 +61,13 @@ function parseToMinutes(time) {
 };
 
 function parseToTimeFormat(minutes){
-  const hours = 0;
+  let hours = 0;
   while(minutes > 60){
     minutes /= 60;
     hours ++;
   }
+
+  minutes  = Math.floor(minutes);
   return (`${(hours < 10) ? `0${hours}` : `${hours}` }:${(minutes < 10) ? (`0${minutes}`) : (`${minutes}`)}`);
 }
 

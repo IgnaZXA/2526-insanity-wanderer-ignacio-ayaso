@@ -129,30 +129,41 @@ const createAfternoonEvent = async (quest) => {
     afternoonEvent.messages.push(`The team walks ${distanceTraveled} kms.`);
 
     // 2º Calc el tiempo que lleva al equipo depende del miembro más lento (el que pese más)
-    console.log("-----------------------------------------------------------------");
-    console.log(quest.characters);
 
     const charactersJSON = await getAssignedCharactersToQuest(quest.characters);
-    console.log("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    console.log(charactersJSON[0]);
-    // const heaviestCharacter = getHeaviestCharacter();
-    // afternoonEvent.messages.push(`The slowest member is ${heaviestCharacter} with a weight of 25 kgs.`);
 
-    // const totalTime = distanceTraveled * heaviestCharacter.equipment.weight;
-    // afternoonEvent.messages.push(`Time spent ${totalTime} minutes`);
 
-    // const currentTime = utilities.parseToMinutes(afternoonEvent.time);
+    console.log("-----------------------------------------------------------");
+    console.log(charactersJSON);
+    console.log("-----------------------------------------------------------");
 
-    // console.log(currentTime);
+
+    const heaviestCharacter = getHeaviestCharacter(charactersJSON);
+    afternoonEvent.messages.push(`The slowest member is ${heaviestCharacter} with a weight of 25 kgs.`);
+
+    const totalTime = distanceTraveled * heaviestCharacter.equipment.weight;
+    afternoonEvent.messages.push(`Time spent ${totalTime} minutes`);
+
+    const beginingTime = utilities.parseToMinutes(afternoonEvent.time);
+
+    console.log(beginingTime);
+
+    const currentTime = utilities.parseToTimeFormat(beginingTime + totalTime);
+
+    console.log(currentTime);
+
+    quest.end_time = currentTime; // Se irá modificando pero para poder usarlo lo asigno a quest
+
+    afternoonEvent.messages.push(`The current Time now is ${currentTime}`);
 
 };
 
 const getHeaviestCharacter = (characters) => {
     const heaviestChar = characters.reduce((acc, character) => {
-        (acc) ? acc : character; // Si es la primera vez que se ejecuta obtiene la referencia del primer objeto
+
         if (acc.equipment.weight < character.equipment.weight) acc = character;
         return acc;
-    }, {});  
+    }, characters[0]);  
 
     return heaviestChar; 
 };
@@ -196,8 +207,8 @@ const getAssignedCharactersToQuest = async (characters) => {
     }
 
     console.log("SE ACABO!");
-    console.log(charsJSON);
-    return charsJSON;
+    console.log(charactersJSON);
+    return charactersJSON;
 }
 
 
