@@ -75,8 +75,13 @@ const newQuestSimulation = (characters, latestQuest) => {
 
     // --- MEDIODIA ---
     const afternoonEvent = createAfternoonEvent(quest);
+    quest.events.push(morningEvent);
+
+
 
     // --- TARDE ---
+    const nighrfallEvent = createNightfallEvent(quest);
+    quest.events.push(morningEvent);
 
 
     // --- NOCHE ---
@@ -225,8 +230,16 @@ const getAssignedCharactersToQuest = async (characters) => {
 }
 
 
-const createNightfallEvent = () => {
+const createNightfallEvent = (quest) => {
 
+    afternoonEvent.messages.push(`NIGHTFALL event starting.`);
+    afternoonEvent.messages.push(`The group prepares the campfire... Time invested : 1 hour`);
+    let currentTime = quest.end_time; 
+    currentTime = utilities.parseToMinutes(currentTime + (60));
+    afternoonEvent.messages.push(`The current time now is ${currentTime}`);
+    quest.end_time = currentTime; // Se irá modificando pero para poder usarlo lo asigno a quest
+
+    afternoonEvent.messages.push(`NIGHTFALL event finished.`);
 };
 
 const createNightEvent = () => {
