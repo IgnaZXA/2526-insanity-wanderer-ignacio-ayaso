@@ -148,13 +148,26 @@ const createAfternoonEvent = async (quest) => {
 
     console.log(beginingTime);
 
-    const currentTime = utilities.parseToTimeFormat(beginingTime + totalTime);
+    let currentTime = utilities.parseToTimeFormat(beginingTime + totalTime);
 
     console.log(currentTime);
 
-    quest.end_time = currentTime; // Se irá modificando pero para poder usarlo lo asigno a quest
 
     afternoonEvent.messages.push(`The current Time now is ${currentTime}`);
+    afternoonEvent.messages.push(`CROSSING event finished.`);
+
+    afternoonEvent.messages.push(`CROSSING event finished.`);
+
+    afternoonEvent.messages.push(`RESTING event starting.`);
+    afternoonEvent.messages.push(`The group rest by 5 hours`);
+    currentTime = utilities.parseToMinutes(currentTime);
+    currentTime = utilities.parseToMinutes(currentTime + (5*60));
+    afternoonEvent.messages.push(`The current time now is ${currentTime}`);
+    quest.end_time = currentTime; // Se irá modificando pero para poder usarlo lo asigno a quest
+
+    afternoonEvent.messages.push(`RESTING event finished.`);
+    
+
 
 };
 
